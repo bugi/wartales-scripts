@@ -120,7 +120,6 @@ function unpack ()
   "$EXE" -Y "$here"/Shiro_Games_PAK_script.bms \
     "$WTcommondir/res.pak-$WTversion" \
     "$dir_of_action/$WTversion"
-  fi
   cp -a "$dir_of_action/$WTversion/data.cdb" "$dir_of_action/data.cdb-$WTversion"
   rm -rf "$dir_of_action/$WTversion"
 }
