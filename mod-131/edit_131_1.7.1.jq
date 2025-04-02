@@ -140,7 +140,19 @@
   | .value
   ) = 1
 
-# v1.1 mining skipped because it changed in v1.4
+# v1.1 mining
+|
+( .sheets[] | select(.name == "constant")
+  | .lines[]
+  | select(.id == "MiningRangeTorusMin")
+  | .value
+  ) = 1
+|
+( .sheets[] | select(.name == "constant")
+  | .lines[]
+  | select(.id == "MiningRangeTorusMax")
+  | .value
+  ) = 1
 
 # v1.1 fishing
 |
@@ -328,7 +340,7 @@
   | .value
   ) = 0.1
 
-# v1.1 mining
+# v1.4 mining
 |
 ( .sheets[] | select(.name == "constant")
   | .lines[]
