@@ -113,7 +113,7 @@ function unpack ()
   # Removes the unpacked data after saving the data.cdb file.
   if [[ -e $dir_of_action/data.cdb-$WTversion ]]
   then
-    echo "The extracted file '$dir_of_action/$WTversion' already exists.  Using it instead of making a new copy." 1>&2
+    echo "The extracted file '$dir_of_action/data.cdb-$WTversion' already exists.  Using it instead of making a new copy." 1>&2
     true
     return
   fi
@@ -132,16 +132,33 @@ function autoedit ()
   #   --tab is to use tabs for indent instead of spaces.
   #   Perl is used to remove the newline from the last line of the file.
 
+  # Setting $tab to empty string generates a file for debug.
+  local tab=--tab
+  # tab=
+
   local tf="$(mktemp)"
   cat "$dir_of_action/data.cdb-$WTversion" >| "$tf"
   local f
   for f in "$dir_of_action/edit_"*.jq
   do
-    jq --tab -f "$f" < "$tf" >| "$tf"-
-    mv "$tf"- "$tf"
+    echo "applying $f"
+    if jq $tab -f "$f" < "$tf" >| "$tf"-
+    then
+      mv "$tf"- "$tf"
+    else
+      echo "file($f) failed to edit" 1>&2
+      rm -f "$tf" "$tf"-
+      false
+      return
+    fi
   done
   mkdir -p "$dir_of_action/mod-$MODname"
-  perl -p -e 'chomp if eof' < "$tf" > "$dir_of_action/mod-$MODname/data.cdb"
+  if [[ -n $tab ]]
+  then
+    perl -p -e 'chomp if eof' < "$tf" > "$dir_of_action/mod-$MODname/data.cdb"
+  else
+    mv "$tf" "$dir_of_action/mod-$MODname/data.cdb"
+  fi
   rm -f "$tf" "$tf"-
 }
 
@@ -164,5 +181,5 @@ case "$1" in
   (apply) backup && unpack && autoedit && pack ; exit ;;
 esac
 
-echo "You will need to give me a directory name and an instruction as the second." 1>&2
+echo "You will need to give me a directory name as a first argument and an instruction as the second." 1>&2
 exit 1
