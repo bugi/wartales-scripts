@@ -8,6 +8,10 @@
 
 #
 # implement bolas
+# 2025-04-06 -- In game, these are listed literally instead of the referenced strings:
+# * #item.CaptureBolas.name
+# * #item.CaptureBolas.desc
+# * #skill.BeltAccHunt_Master.name
 #
 
 ( .sheets[] | select(.name=="item") | .lines ) += [
