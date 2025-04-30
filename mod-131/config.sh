@@ -23,7 +23,7 @@
 
 MODid=131
 MODversion=1.7.1
-WTversion=v1.0.40128
+WTversion=v1.0.41230
 
 WTcommondir="$HOME"/.steam/debian-installation/steamapps/common/Wartales
 
