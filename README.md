@@ -17,6 +17,11 @@ Unpack it in the same directory as this file.  For example:
 
     unzip quickbms_linux.zip
 
+## Modding Guide
+
+The [Lazy Overhaul - Modding Guide](https://www.nexusmods.com/wartales/articles/11)
+has some good tips.
+
 
 # CONFIGURE this tool
 
